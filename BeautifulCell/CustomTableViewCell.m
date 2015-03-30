@@ -32,7 +32,7 @@
 - (void)handleLongpressGesture:(UILongPressGestureRecognizer *)gesture
 {
     
-    CGPoint startPoint = CGPointZero;
+    static CGPoint startPoint;
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan:
         {
@@ -59,7 +59,8 @@
         {
             NSLog(@"ended");
             CGPoint endPoint = [gesture locationInView:self.contentView];
-            if (endPoint.x>self.contentView.bounds.size.width-50) {
+            if (endPoint.x>self.contentView.bounds.size.width-125
+                && (endPoint.x - startPoint.x > self.contentView.bounds.size.width / 4)) {
                 if (self.cellBlock) {
                     self.cellBlock(YES, _cellIndex);
                 }
